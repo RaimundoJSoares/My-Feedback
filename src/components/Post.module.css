@@ -41,14 +41,6 @@
     line-height: 1.6;
 }
 
-.avatar {
-    width: calc(3rem + 4px);
-    height: calc(3rem + 4px);
-    border-radius: 8px;
-    margin-bottom: .5rem;
-    outline: 2px solid var(--green500);
-}
-
 .content{
     line-height: 1.6;
     color: var(--gray300);

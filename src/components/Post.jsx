@@ -1,3 +1,4 @@
+import { Avatar } from './Avatar'
 import { Comment } from './Comment'
 import styles from './Post.module.css'
 
@@ -6,7 +7,7 @@ const Post = () => {
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <img  className={styles.avatar} src="https://ahoradoplay.com/wp-content/uploads/2021/03/genshin-impact-hu-tao-trailer-1280x720.jpg"  />
+          <Avatar src="https://ahoradoplay.com/wp-content/uploads/2021/03/genshin-impact-hu-tao-trailer-1280x720.jpg"  />
           <div className={styles.authorInfo}>
             <strong>Raimundo</strong>
             <span>Full stack Developer </span>

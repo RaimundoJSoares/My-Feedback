@@ -1,10 +1,11 @@
 import { Trash, ThumbsUp } from 'phosphor-react';
+import { Avatar } from './Avatar';
 import styles from './Comment.module.css';
 
 export function Comment() {
     return(
         <div className={styles.comment}>
-            <img src="https://ahoradoplay.com/wp-content/uploads/2021/03/genshin-impact-hu-tao-trailer-1280x720.jpg" />
+            <Avatar src="https://ahoradoplay.com/wp-content/uploads/2021/03/genshin-impact-hu-tao-trailer-1280x720.jpg" />
 
             <div className={styles.commentBox}>
                 <div className={styles.commentContent}>
