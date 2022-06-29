@@ -1,20 +1,29 @@
 import { Avatar } from './Avatar'
+import { format } from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
+
 import { Comment } from './Comment'
 import styles from './Post.module.css'
 
-const Post = () => {
+const Post = ({author, publishedAt}) => {
+  const publishedDateFormatted = format(publishedAt, 
+    
+  {locale: ptBR})
+
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar src="https://ahoradoplay.com/wp-content/uploads/2021/03/genshin-impact-hu-tao-trailer-1280x720.jpg"  />
+          <Avatar src={author.avatar}  />
           <div className={styles.authorInfo}>
-            <strong>Raimundo</strong>
-            <span>Full stack Developer </span>
+            <strong>{author.name} </strong>
+            <span>{author.role} </span>
           </div>
         </div>
 
-        <time title='26 de junho as 09:01' dateTime='2022-06-11 09:01:00' >publicado a 1h</time>
+        <time title='' dateTime='2022-06-11 09:01:00' > 
+        {publishedDateFormatted}
+        </time>
       </header>
       
       <div className={styles.content}>
