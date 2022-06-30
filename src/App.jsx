@@ -20,9 +20,9 @@ const posts = [
       {type: 'paragraph', content: 'Olá a todos, estou fazendo mais um projeto em React JS.'},
       {type: 'paragraph', content: 'Dessa vez estou fazendo o MyFeedback que é um sistema de feedback para o usuário.'},
 
-      {type: 'link', content: " <a href='https://github.com/RaimundoJSoares'> github.com/RaimundoJSoares</a>"},
+      {type: 'link', content: "github.com/RaimundoJSoares"},
     ],
-    publishedAt: new Date ('2020-06-11 09:01:00')
+    publishedAt: new Date ('2020-06-11 09:01:00'),
   },
   {
     id: 2,
@@ -35,9 +35,9 @@ const posts = [
       {type: 'paragraph', content: 'Fireworks are for now, but friends are forever.'},
       {type: 'paragraph', content: "Did you know? A lot of the fireworks used during Liyue's Lantern Rite were purchased from our shop. I made them to order before asking Beidou to ship them to Liyue. Exports like these aren't allowed under the Sakoku Decree, but... How can there be festivals without fireworks"},
 
-      {type: 'link', content: " <a href='https://github.com/RaimundoJSoares'> github.com/RaimundoJSoares</a>"},
+      {type: 'link', content: "github.com/RaimundoJSoares"},
     ],
-    publishedAt: new Date ('2022-28-06 11:18:00')
+    publishedAt: new Date ('2022-06-30 07:18:00')
   },
 ] 
 
@@ -52,7 +52,8 @@ function App() {
         {posts.map(post =>{
           return(
            <Post 
-           author={post.author}
+            key={post.id}
+            author={post.author}
             content={post.content}
             publishedAt={post.publishedAt}
            />
