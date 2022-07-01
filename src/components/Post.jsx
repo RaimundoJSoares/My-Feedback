@@ -1,50 +1,121 @@
-import { Avatar } from './Avatar'
-import { Comment } from './Comment'
-import styles from './Post.module.css'
+import { Avatar } from "./Avatar";
+import { format, formatDistanceToNow } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
 
-const Post = () => {
+import { Comment } from "./Comment";
+import styles from "./Post.module.css";
+import { useState } from "react";
+
+const Post = ({ author, publishedAt, content }) => {
+  const publishedDateFormatted = format(
+    publishedAt,
+    "dd 'de' LLLL 'às' HH:mm'h'",
+    {
+      locale: ptBR,
+      addSufix: true,
+    }
+  );
+
+  //HOOKS
+  const [comments, setComments] = useState(["Noice Post!"]);
+  const [newComment, setNewComment] = useState("");
+
+
+  //FUNCTION to handle comments
+  function handleCreateNewComment() {
+    event.preventDefault();
+
+    setComments([...comments, newComment]); //adiciona um novo comentario
+
+    setNewComment(""); // após adicionar o comentario, limpa o input
+  }
+
+  function handleNewCommentText() {
+    event.target.setCustomValidity('')
+    setNewComment(event.target.value);
+  }
+
+  function handleInvalidComment() {
+   event.target.setCustomValidity('Campo inválido, não pode ser vazio')
+  }
+
+  const publishDataRelativeNow = formatDistanceToNow(publishedAt, {
+    locale: ptBR,
+    addSuffix: true,
+  });
+
+  function deleteComment(commentToDelete) { 
+    //remove um comentario da lista de comentarios
+    const CommentListWithoutDeletedOne = comments.filter(comment => { //retorna um novo array(lista) sem o comentario que foi deletado
+      return ( 
+        comment !== commentToDelete  //retorna true se o comentario for diferente do comentario que foi deletado
+      )
+    }) 
+    setComments(CommentListWithoutDeletedOne); //atualiza a lista de comentarios
+  }
+
+
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar src="https://ahoradoplay.com/wp-content/uploads/2021/03/genshin-impact-hu-tao-trailer-1280x720.jpg"  />
+          <Avatar src={author.avatar} />
           <div className={styles.authorInfo}>
-            <strong>Raimundo</strong>
-            <span>Full stack Developer </span>
+            <strong>{author.name} </strong>
+            <span>{author.role} </span>
           </div>
         </div>
 
-        <time title='26 de junho as 09:01' dateTime='2022-06-11 09:01:00' >publicado a 1h</time>
+        <time
+          title={publishedDateFormatted}
+          dateTime={publishedAt.toISOString()}
+        >
+          {publishDataRelativeNow}
+        </time>
       </header>
-      
+
       <div className={styles.content}>
-        <p> Olá a todos, estou fazendo mais um projeto em React JS.</p>
-        <p> Dessa vez estou fazendo o MyFeedback que é um sistema de feedback para o usuário.</p>
-
-        <p><a href='https://github.com/RaimundoJSoares'> github.com/RaimundoJSoares</a></p>
-        <p><a href='https://www.linkedin.com/in/raimundo-junior-da-silva-soares-2852991b3/'> #novoprojeto</a> {''}
-        <a href=''>#rocketseat</a> {''}
-         <a href=''>#inLoveForReact</a> {''}
-         </p>
+        {content.map((line) => {
+          if (line.type === "paragraph") {
+            return <p key={line.content}>{line.content}</p>;
+          } else if (line.type === "link") {
+            return (
+              <p key={line.content}>
+                <a href="#">{line.content}</a>
+              </p>
+            );
+          }
+        })}
       </div>
-     <form className={styles.commentForm}>
-      <strong>Deixe seu feedback</strong>
+      <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
+        <strong>Deixe seu feedback</strong>
 
-      <textarea
-        placeholder='Deixe um comentário'
-      />
-      <footer>
-        <button type='submit'>Publicar</button>
+        <textarea
+          value={newComment}
+          placeholder="Deixe um comentário"
+          name="comment"
+          onChange={handleNewCommentText}
+          onInvalid={handleInvalidComment}
+          required
+        />
+        <footer>
+          <button type="submit" > Publicar </button>
         </footer>
-     </form>
+      </form>
 
-     <div className={styles.commentList}>
-      <Comment/>
-      <Comment/>
-      <Comment/>
-     </div>
+      <div className={styles.commentList}>
+        {comments.map((comment) => {
+          return (
+            <Comment
+              key={comment}
+              content={comment}
+              onDeleteComment={deleteComment} //passa a função para o componente Comment
+            />
+          );
+        })}
+      </div>
     </article>
-  )
-}
+  );
+};
 
-export default Post
+export default Post;
